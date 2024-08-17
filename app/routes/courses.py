@@ -1,6 +1,6 @@
 from typing import List, Optional
 from fastapi import APIRouter, HTTPException, status
-from ..models import Course
+from ..models import Course, CourseCreate
 from ..crud.course_crud import create_course, delete_course, get_total_courses, search_courses, update_course, get_all_courses, get_course_by_id
 import logging
 
@@ -54,7 +54,7 @@ def get_course(course_id: str):
 
 
 @router.post("/courses/", response_model=Course, status_code=status.HTTP_201_CREATED)
-def create(course: Course):
+def create(course: CourseCreate):
     logger.info('Creating course...')
     logger.info('Course: %s', course)
     try:

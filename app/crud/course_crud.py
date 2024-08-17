@@ -4,7 +4,7 @@ import pandas as pd
 import io
 from pymongo import MongoClient
 from bson.objectid import ObjectId
-from ..models import Course
+from ..models import Course, CourseCreate
 from datetime import datetime, timedelta
 import logging
 import requests
@@ -142,10 +142,11 @@ def get_all_courses(skip: int = 0, limit: int = 10) -> List[Course]:
         logger.error('Database query failed: %s', e)
         raise e
 
-def create_course(course: Course) -> str:
+def create_course(course: CourseCreate) -> str:
     try:
         # Convert Course model to dictionary, ensuring the correct field names
         course_dict = {
+            "id": None,
             "University": course.university,
             "City": course.city,
             "Country": course.country,
