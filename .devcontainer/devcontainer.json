@@ -1,0 +1,25 @@
+{
+    "name": "Python Service",
+    "dockerComposeFile": "./docker-compose.yml",
+    "workspaceFolder": "/home/python/workspace",
+    "overrideCommand": true,
+    "service": "python-srv",
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "ms-python.python",
+                "ms-python.vscode-pylance",
+                "ms-azuretools.vscode-docker",
+                "eamodio.gitlens",
+                "visualstudioexptteam.vscodeintellicode",
+                "esbenp.prettier-vscode",
+                "humao.rest-client",
+                "vscodevim.vim",
+                "ms-python.python"
+            ],
+            "settings": {}
+        }
+    },
+    "postCreateCommand": ".devcontainer/run_once.sh && .devcontainer/dev_prep.sh",
+    "remoteUser": "python"
+}

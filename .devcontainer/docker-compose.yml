@@ -1,0 +1,25 @@
+version: '3.9'
+
+services:
+  python-srv:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    working_dir: /home/python/workspace/
+    ports:
+      - 8000:8000
+    volumes:
+      - type: bind
+        source: ../
+        target: /home/python/workspace/
+    depends_on:
+      - mongodb
+
+  mongodb:
+    container_name: mongodb
+    image: mongo:latest
+    hostname: mongodb
+    ports:
+      - 27017:27017
+    environment:
+      MONGO_INITDB_DATABASE: courses_db
