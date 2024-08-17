@@ -1,7 +1,7 @@
 from typing import List, Optional
 from fastapi import APIRouter, HTTPException, status
 from ..models import Course
-from ..crud.course_crud import create_course, delete_course, search_courses, update_course, get_all_courses, get_course_by_id
+from ..crud.course_crud import create_course, delete_course, get_total_courses, search_courses, update_course, get_all_courses, get_course_by_id
 import logging
 
 logging.basicConfig(level=logging.INFO)
@@ -29,6 +29,15 @@ def get_all(skip: int = 0, limit: int = 10):
         return courses
     except Exception as e:
         logger.error('Error retrieving all courses: %s', e)
+        raise HTTPException(status_code=500, detail=f"An error occurred: {e}")
+    
+@router.get("/courses/total", response_model=int)
+def get_total():
+    try:
+        total = get_total_courses()
+        return total
+    except Exception as e:
+        logger.error('Error retrieving total courses: %s', e)
         raise HTTPException(status_code=500, detail=f"An error occurred: {e}")
     
 @router.get("/courses/{course_id}", response_model=Course)

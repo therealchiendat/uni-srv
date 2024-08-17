@@ -3,7 +3,7 @@ from pydantic import BaseModel, Field
 from datetime import date
 
 class Course(BaseModel):
-    id: Optional[str]
+    id: Optional[str] = Field(None, alias="_id")
     university: str
     city: str
     country: str

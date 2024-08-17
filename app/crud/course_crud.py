@@ -99,6 +99,21 @@ def search_courses(
     
     return courses
 
+def get_total_courses() -> int:
+    return db.courses.count_documents({})
+
+def get_total_searched_courses(search_term: str) -> int:
+    query = {}
+    if search_term and isinstance(search_term, str):  # Ensure search_term is a string
+        regex = {"$regex": search_term, "$options": "i"}
+        query = {"$or": [
+            {"University": regex},
+            {"City": regex},
+            {"Country": regex},
+            {"CourseName": regex}
+        ]}
+    
+    return db.courses.count_documents(query)
 
 def get_course_by_id(course_id: str) -> Course:
     try:
@@ -116,8 +131,8 @@ def get_all_courses(skip: int = 0, limit: int = 10) -> List[Course]:
         check_data_expiry()
 
         # Apply skip and limit to the MongoDB query
-        # docs = db.courses.find({}).skip(skip).limit(limit)
-        docs = db.courses.find({}) 
+        docs = db.courses.find({}).skip(skip).limit(limit)
+        # docs = db.courses.find({}) 
 
         # Map each document to a Course model
         courses = [map_mongo_to_course(doc) for doc in docs]
